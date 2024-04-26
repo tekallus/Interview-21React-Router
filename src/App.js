@@ -1,6 +1,5 @@
-// React ve react-router-dom modüllerini alıyoruz
 import React, { useState, useEffect } from "react";
-import { BrowserRouter, Link, Routes, Route, Navigate } from "react-router-dom";
+import { MemoryRouter, Link, Routes, Route, Navigate } from "react-router-dom";
 
 // Resim URL'lerini tanımlıyoruz
 const ONE = "https://images.pexels.com/photos/2249528/pexels-photo-2249528.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2";
@@ -13,8 +12,8 @@ const SIX = "https://images.pexels.com/photos/4772874/pexels-photo-4772874.jpeg?
 // Ana uygulama bileşeni, React Router'ı kullanarak sayfa rotalarını belirler.
 function App() {
   return (
-    // BrowserRouter kullanarak uygulama için yönlendirme yapısını oluşturuyoruz
-    <BrowserRouter>
+    // MemoryRouter kullanarak uygulama için yönlendirme yapısını oluşturuyoruz
+    <MemoryRouter>
       {/* Routes bileşeni ile sayfa rotalarını belirtiyoruz */}
       <Routes>
         {/* Ana sayfa rotası */}
@@ -24,7 +23,7 @@ function App() {
         {/* Tanımsız rotalar için ana sayfaya geri yönlendirme */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
-    </BrowserRouter>
+    </MemoryRouter>
   );
 }
 
@@ -100,31 +99,26 @@ const Captcha = ({ setCaptchaResult }) => {
   // CAPTCHA bileşenini render et
   return (
     <div className="flex flex-col justify-center items-center h-screen">
-      
-    
-        <>
-          {/* Başlık */}
-          <h3 className="text-xl font-bold mb-4">Hangi resimde {correctAnswer} rakamı var?</h3>
-          {/* Resimler */}
-          <div className="grid grid-cols-3 mt-3 gap-4">
-            {[ONE, TWO, THREE, FOUR, FIVE, SIX].map((image, index) => (
-              <img
-                key={index}
-                src={image}
-                alt={`Resim ${index + 1}`}
-                className={`max-w-xs max-h-32 rounded-lg cursor-pointer transition duration-300 transform hover:scale-105 ${selectedAnswer === index + 1 && (selectedAnswer === correctAnswer ? 'border-4 border-green-500' : 'border-4 border-red-500')}`}
-                onClick={() => handleImageClick(index + 1)}
-              />
-            ))}
-          </div>
-          {/* Sonuç */}
-          {selectedAnswer !== null && (
-            <p className={`text-lg mt-4 ${selectedAnswer === correctAnswer ? 'text-green-500' : 'text-red-500'}`}>
-              {selectedAnswer === correctAnswer ? "Doğru cevap! Korumalı sayfaya yönlendiriliyorsunuz..." : "Yanlış cevap! Lütfen tekrar deneyin."}
-            </p>
-          )}
-        </>
-   
+        {/* Başlık */}
+        <h3 className="text-xl font-bold mb-4">Hangi resimde {correctAnswer} rakamı var?</h3>
+        {/* Resimler */}
+        <div className="grid grid-cols-3 mt-3 gap-4">
+          {[ONE, TWO, THREE, FOUR, FIVE, SIX].map((image, index) => (
+            <img
+              key={index}
+              src={image}
+              alt={`Resim ${index + 1}`}
+              className={`max-w-xs max-h-32 rounded-lg cursor-pointer transition duration-300 transform hover:scale-105 ${selectedAnswer === index + 1 && (selectedAnswer === correctAnswer ? 'border-4 border-green-500' : 'border-4 border-red-500')}`}
+              onClick={() => handleImageClick(index + 1)}
+            />
+          ))}
+        </div>
+        {/* Sonuç */}
+        {selectedAnswer !== null && (
+          <p className={`text-lg mt-4 ${selectedAnswer === correctAnswer ? 'text-green-500' : 'text-red-500'}`}>
+            {selectedAnswer === correctAnswer ? "Doğru cevap! Korumalı sayfaya yönlendiriliyorsunuz..." : "Yanlış cevap! Lütfen tekrar deneyin."}
+          </p>
+        )}
     </div>
   );
 };
